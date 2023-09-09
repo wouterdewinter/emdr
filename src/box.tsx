@@ -6,16 +6,26 @@ import Button from "@mui/material/Button";
 export function Box() {
   const [active, setActive] = useState(false);
 
-  const speed = 1.4;
+  const speed = 1.5;
+
+  // setup audio
+  const audioContext = new AudioContext();
   const audio = new Audio(kick);
+  const track = audioContext.createMediaElementSource(audio);
+  const stereoNode = new StereoPannerNode(audioContext);
+  track.connect(stereoNode).connect(audioContext.destination);
 
   const onAnimationEvent = () => {
     if (active) {
+      // play left
+      stereoNode.pan.value = -1;
       audio.play();
     }
     setTimeout(
       () => {
         if (active) {
+          // play right
+          stereoNode.pan.value = 1;
           audio.play();
         }
       },
@@ -28,12 +38,14 @@ export function Box() {
       style={{
         width: "100%",
         height: "100%",
-        //backgroundColor: "#369",
+        backgroundColor: "#123",
         position: "relative",
       }}
     >
       <div
         style={{
+          top: "calc(30% - 40px)",
+          position: "relative",
           animation: active
             ? `bounce infinite ${speed}s cubic-bezier(.42,0,.58,1)`
             : undefined,
@@ -42,13 +54,13 @@ export function Box() {
         onAnimationIteration={onAnimationEvent}
         onAnimationStart={onAnimationEvent}
       >
-        <Dot />
+        {active && <Dot />}
       </div>
       <div
         style={{
           textAlign: "center",
           position: "absolute",
-          top: "80%",
+          top: "70%",
           left: "50%",
           transform: "translate(-50%, -50%)",
         }}
@@ -66,17 +78,14 @@ export function Box() {
 }
 
 function Dot() {
-  console.log("render");
   return (
     <div
       style={{
-        backgroundColor: "#f33",
-        // filter: "blur(2px)",
+        backgroundColor: "#fff",
+        filter: "blur(5px)",
         width: "80px",
         height: "80px",
-        position: "absolute",
         borderRadius: "40px",
-        // border: "solid 2px #fff",
       }}
     />
   );

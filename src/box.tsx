@@ -1,3 +1,4 @@
+// sound from https://github.com/GoogleChromeLabs/web-audio-samples
 import kick from "./assets/kick.wav";
 import { useState } from "react";
 
@@ -24,8 +25,8 @@ export function Box() {
   return (
     <div
       style={{
-        width: "1400px",
-        height: "600px",
+        width: "100%",
+        height: "100%",
         backgroundColor: "#369",
         position: "relative",
       }}
@@ -47,6 +48,7 @@ export function Box() {
           textAlign: "center",
           position: "absolute",
           bottom: "10%",
+          left: "50%",
         }}
       >
         <button onClick={() => setActive(!active)}>

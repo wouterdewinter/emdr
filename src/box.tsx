@@ -1,6 +1,7 @@
 // sound from https://github.com/GoogleChromeLabs/web-audio-samples
 import kick from "./assets/kick.wav";
 import { useState } from "react";
+import Button from "@mui/material/Button";
 
 export function Box() {
   const [active, setActive] = useState(false);
@@ -27,14 +28,14 @@ export function Box() {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "#369",
+        //backgroundColor: "#369",
         position: "relative",
       }}
     >
       <div
         style={{
           animation: active
-            ? `bobble infinite ${speed}s cubic-bezier(.42,0,.58,1)`
+            ? `bounce infinite ${speed}s cubic-bezier(.42,0,.58,1)`
             : undefined,
           willChange: "transform",
         }}
@@ -47,13 +48,18 @@ export function Box() {
         style={{
           textAlign: "center",
           position: "absolute",
-          bottom: "10%",
+          top: "80%",
           left: "50%",
+          transform: "translate(-50%, -50%)",
         }}
       >
-        <button onClick={() => setActive(!active)}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => setActive(!active)}
+        >
           {active ? "Stop" : "Start"}
-        </button>
+        </Button>
       </div>
     </div>
   );
